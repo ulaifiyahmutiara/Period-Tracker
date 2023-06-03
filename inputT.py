@@ -1,39 +1,42 @@
 #INPUT TANGGAL PERTAMA KALI
 
-import datetime as dt
+from datetime import datetime, timedelta
 
-# tgl = (input(f'Masukkan Tanggal Terakhir Mens Kamu: '))
-# bln = (input(f'Masukkan Bulan Terakhir Mens Kamu: '))
-# rata = (input(f'Kamu Biasanya Mens Berapa Hari Sih? '))
+def hitung_siklus_mens(rata_durasi_mens, tanggal_terakhir_mens):
+    tanggal_terakhir_mens = datetime.strptime(tanggal_terakhir_mens, '%Y-%m-%d')
 
-# tanggal = '''
-#     {}       {}        {}'''.format(tgl, bln, rata)
+    tanggal_awal_ovulasi = tanggal_terakhir_mens + timedelta(days=int(rata_durasi_mens) - 14)
+    tanggal_terakhir_ovulasi = tanggal_awal_ovulasi + timedelta(days=4)
 
-# database = open('databasetanggal.csv', 'a')
-# database.write(tanggal)
-# database.close()
+    tanggal_awal_siklus_berikutnya = tanggal_terakhir_mens + timedelta(days=int(rata_durasi_mens))
+    tanggal_akhir_siklus_berikutnya = tanggal_awal_siklus_berikutnya + timedelta(days=int(rata_durasi_mens))
 
-kira_mens = []
-durasi = 7
-for lamanya in range(1, durasi + 1):
-    kira_mens.append(lamanya)
+    tanggal_awal_folikular = tanggal_awal_siklus_berikutnya - timedelta(days=14)
+    durasi_folikular = 14
     
-kira_folikular = []
-durasi = 4
-for lamanya in range(1, durasi + 1):
-    kira_folikular.append(lamanya)
+    tanggal_awal_mens = tanggal_awal_siklus_berikutnya
+    durasi_mens = int(rata_durasi_mens)
 
-kira_ovulasi = []
-durasi = 7
-for lamanya in range(1, durasi + 1):
-    kira_ovulasi.append(lamanya)
+    tanggal_awal_luteal = tanggal_awal_siklus_berikutnya + timedelta(days=int(rata_durasi_mens) - 14)
+    durasi_luteal = 14
+    
+    return tanggal_awal_ovulasi.strftime('%Y-%m-%d'), tanggal_awal_folikular.strftime('%Y-%m-%d'), durasi_folikular, tanggal_awal_mens.strftime('%Y-%m-%d'), durasi_mens, tanggal_awal_luteal.strftime('%Y-%m-%d'), durasi_luteal
 
-kira_luteal = []
-durasi = 13
-for lamanya in range(1, durasi + 1):
-    kira_luteal.append(lamanya)
+rata_durasi_mens = input("Masukkan rata-rata durasi menstruasi (dalam hari): ")
+tanggal_terakhir_mens = input("Masukkan tanggal terakhir menstruasi (format: YYYY-MM-DD): ")
 
-print(kira_folikular)
-print(kira_luteal)
-print(kira_mens)
-print(kira_ovulasi)
+tanggal_awal_ovulasi, tanggal_awal_folikular, durasi_folikular, tanggal_awal_mens, durasi_mens, tanggal_awal_luteal, durasi_luteal = hitung_siklus_mens(rata_durasi_mens, tanggal_terakhir_mens)
+
+    # tgl_terakhir_mens = (input(f'Masukkan Tanggal Terakhir Mens Kamu: '))
+    # bln = (input(f'Masukkan Bulan Terakhir Mens Kamu: '))
+    # rata_durasi_mens = (input(f'Kamu Biasanya Mens Berapa Hari Sih? '))
+
+    # tanggal = '''
+    #     {}       {}        {}'''.format(tgl_terakhir_mens, bln, rata_durasi_mens)
+
+    # database = open('databasetanggal.csv', 'a')
+    # database.write(tanggal)
+    # database.close()
+
+
+    
